@@ -172,7 +172,27 @@ class sistema{
 
     }
 
-    excluir_pedido(lista_pedidos){   //corrigir
+    excluir_pedido(cliente){   //corrigir
+
+        var meus_pedidos = []
+        for(i = 0; i < pedidos.length; i++){
+
+            if(pedidos[i].id_cliente == cliente.id){
+                meus_pedidos.push(pedidos[i])
+            }
+        }
+        if (meus_pedidos == 0){
+            espaco()
+            print("Sem pedidos! ")
+            return menu_cliente(cliente)
+        }
+        var lista_pedidos = meus_pedidos
+
+        if (lista_pedidos == 0){
+            espaco()
+            print('sem pedidos')
+            return menu_pedidos(lista_pedidos)
+        }
 
         abrir_produtos(lista_pedidos)
         var resposta = input("Escreva o numero do pedido que deseja excluir: ")
@@ -184,28 +204,27 @@ class sistema{
             return menu_pedidos(lista_pedidos)
         }
 
-
         resposta = resposta - 1
-        lista_pedidos.splice(resposta, 1)
+        var pedido_atual = lista_pedidos[resposta]
 
-        if (lista_pedidos == 0){
-            print('sem pedidos')
-            return menu_pedidos(lista_pedidos)
-        }
-        return menu_pedidos(lista_pedidos)
+        var indice = pedidos.indexOf(pedido_atual)
+        pedidos.splice(indice, 1)
+
+        return menu_pedidos(cliente)
 
         
     }
 
     fazer_pedido(id_cliente){
 
-        var data = input("Qual a data do pedido?")
+        var data = input("Qual a data do pedido? ")
         var Pedido = new pedido(id_cliente,"Pendente", data)
         pedidos.push(Pedido)
     }
 
     status_pedido(funcionario){
         if (pedidos == 0){
+            espaco()
             print("Sem pedidos!")
             return menu_funcionario(funcionario)
         }
@@ -241,7 +260,7 @@ produtos.push(new produto("bermuda", "preta", "sem", "RS 250", "20"))
 produtos.push(new produto("camisa", "azul", "sem", "RS 250", "20"))
 var funcionario_adm = new funcionario("mary", "445", "mary@", "1234")
 var cliente_adm = new cliente('lucas', '12/07/2003', "1669", 'lucas', '123')
-var cliente_adm1 = new cliente('pedro', '12/07/2003', "1669", 'pedro@mail', '123')
+var cliente_adm1 = new cliente('pedro', '12/07/2003', "1669", 'pedro', '123')
 
 
 usuarios.push(cliente_adm)
@@ -338,8 +357,9 @@ function cadastro_funcionario(){                                // Interface de 
     let senha = validar_senha()
     espaco()
     
-    var funcionario1 = new funcionario(nome, nascimento, cpf, email, senha)
+    var funcionario1 = new funcionario(nome, cpf, email, senha)
     usuarios.push(funcionario1)
+    return menu_funcionario(funcionario1)
 
 }
 
@@ -645,8 +665,9 @@ function menu_cliente(cliente){
                 print("Sem avaliacoes")
                 return menu_cliente(cliente_atual)
             }
+            espaco()
             for(a of meus_pedidos){
-                print(a.avaliacao)
+                print(a.avaliacao, " ", a.data)
             }
             return menu_cliente(cliente_atual)
 
@@ -680,6 +701,7 @@ function editar_cliente(cliente){
             usuarios.push(cliente_atual)
             espaco()
             print(cliente_atual)
+            print("Modificacao feita com sucesso!")
             
             return editar_cliente(cliente_atual)
         
@@ -690,7 +712,8 @@ function editar_cliente(cliente){
             usuarios.push(cliente_atual)
             espaco()
             print(cliente_atual)
-            
+            print("Modificacao feita com sucesso!")
+
             return editar_cliente(cliente_atual)
         
         case 3:
@@ -700,6 +723,7 @@ function editar_cliente(cliente){
             usuarios.push(cliente_atual)
             espaco()
             print(cliente_atual)
+            print("Modificacao feita com sucesso!")
             
             return editar_cliente(cliente_atual)
 
@@ -710,6 +734,7 @@ function editar_cliente(cliente){
             usuarios.push(cliente_atual)
             espaco()
             print(cliente_atual)
+            print("Modificacao feita com sucesso!")
             
             return editar_cliente(cliente_atual)
 
@@ -720,6 +745,7 @@ function editar_cliente(cliente){
             usuarios.push(cliente_atual)
             espaco()
             print(cliente_atual)
+            print("Modificacao feita com sucesso!")
 
         case 6:
             return menu_cliente(cliente_atual)
@@ -741,6 +767,7 @@ function menu_pedidos(cliente){
             }
         }
         if (meus_pedidos == 0){
+            espaco()
             print("Sem pedidos! ")
             return menu_cliente(cliente)
         }
@@ -749,9 +776,10 @@ function menu_pedidos(cliente){
 
     escolha1 = input("Voltar(1)     Avaliar(2)    Excluir Pedido(3)\n")
     escolha1 = parseInt(escolha1)
+
     switch(escolha1){
         case 1:
-            return menu_pedidos(cliente)
+            return menu_cliente(cliente)
         
         case 2:
             var resposta = input("Escreva o numero do pedido que deseja avaliar: ")
@@ -772,7 +800,7 @@ function menu_pedidos(cliente){
 
         case 3:
             var instancia = new sistema
-            instancia.excluir_pedido(lista_pedidos)
+            instancia.excluir_pedido(cliente)
             return menu_pedidos(cliente)
 
         default:
