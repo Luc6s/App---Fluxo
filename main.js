@@ -380,7 +380,7 @@ function validar_senha(){                       // Valida a confirmação da sen
     }
 }
 
-function login(){
+function login(){                               // interface de login
     espaco()
     let emailR = input("Email: ")
     let senhaR = input("Senha: ")
@@ -420,7 +420,7 @@ function login(){
     }   
 }
 
-function descobrir_classe(usuario){
+function descobrir_classe(usuario){             // identifica de qual classe é o usuario (funcionario ou cliente)
     if(usuario instanceof cliente){
         return 1
     }
