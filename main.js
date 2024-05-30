@@ -20,10 +20,12 @@ class funcionario{
 }
 
 class pedido{
-    constructor(id_cliente, status){
+    constructor(id_cliente, status, data, avaliacao){
         this.id = id()
         this.id_cliente = id_cliente
+        this.data = data
         this.status = status
+        this.avaliacao = avaliacao
     }
 }
 
@@ -52,16 +54,195 @@ class sistema{
         produtos.push(Produto)
 
     }
+    editar_produto(indice){
 
+        abrir_produtos(produtos)
+        var produto_atual = produtos[indice]
+    
+        espaco()
+        print("Qual dado gostaria de editar?")
+        print("nome(1)")
+        print("preco(2)")
+        print("validade(3)")
+        print("estoque(4)")
+        print("descricao(5)")
+        print("voltar(6)")
+        var resposta = input()
+        resposta = parseInt(resposta)
+        
+        switch(resposta){
+    
+            case 1:
+                var resposta1 = input("Qual será o novo nome de nome?\n")
+                produtos.splice(indice, 1)
+                produto_atual.nome = resposta1
+                produtos.push(produto_atual)
+                espaco()
+                
+                var instancia = new sistema
+
+                return menu_produtos()
+            
+            case 2:
+                var resposta1 = input("Qual será o novo preco?\n")
+                produtos.splice(indice, 1)
+                produto_atual.preco = resposta1
+                produtos.push(produto_atual)
+                espaco()
+                
+                var instancia = new sistema
+
+                return menu_produtos()
+            
+            case 3:
+                var resposta1 = input("Qual será o novo validade?\n")
+                produtos.splice(indice, 1)
+                produto_atual.validade = resposta1
+                produtos.push(produto_atual)
+                espaco()
+                
+                var instancia = new sistema
+
+                return menu_produtos()
+    
+            case 4:
+                var resposta1 = input("Qual será o novo estoque?\n")
+                produtos.splice(indice, 1)
+                produto_atual.estoque = resposta1
+                produtos.push(produto_atual)
+                espaco()
+                
+                var instancia = new sistema
+
+                return menu_produtos()
+    
+            case 5:
+                var resposta1 = input("Qual será o novo descricao?\n")
+                produtos.splice(indice, 1)
+                produto_atual.descricao = resposta1
+                produtos.push(produto_atual)
+                espaco()
+    
+                var instancia = new sistema
+
+                return menu_produtos()
+            
+            case 6:
+                return menu_produtos()
+    
+            default:
+                print("Resposta inválida!")
+                espaco()
+                var instancia = new sistema
+
+                return menu_produtos()
+        }
+        
+    }
+    excluir_produto(){
+        var resposta = input("Escreva o numero do produto que deseja excluir: ")
+        resposta = parseInt(resposta)
+
+        if(isNaN(resposta)){
+            espaco()
+            print("Resposta Inválida!")
+            return menu_produtos()
+        }
+        var teste = produtos.slice
+
+        resposta = resposta - 1
+        produtos.splice(resposta, 1)
+
+        if(produtos == teste){
+            espaco()
+            print("Resposta Inválida!")
+            return menu_produtos()
+
+        }else{
+            espaco()
+            print("Produto excluido!")
+            return menu_produtos()
+        }
+    }
+    fazer_pedido(id_cliente){
+
+        var data = input("Qual a data do pedido? ")
+        var Pedido = new pedido(id_cliente,"Pendente", data)
+        pedidos.push(Pedido)
+
+    }
+
+    excluir_pedido(lista_pedidos){
+
+        abrir_produtos(lista_pedidos)
+        var resposta = input("Escreva o numero do pedido que deseja excluir: ")
+        resposta = parseInt(resposta)
+
+        if(isNaN(resposta)){
+            espaco()
+            print("Resposta Inválida!")
+            return menu_pedidos(lista_pedidos)
+        }
+
+
+        resposta = resposta - 1
+        lista_pedidos.splice(resposta, 1)
+
+        if (lista_pedidos == 0){
+            print('sem pedidos')
+            return menu_pedidos(lista_pedidos)
+        }
+        return menu_pedidos(lista_pedidos)
+
+        
+    }
+
+    fazer_pedido(id_cliente){
+
+        var data = input("Qual a data do pedido?")
+        var Pedido = new pedido(id_cliente,"Pendente", data)
+        pedidos.push(Pedido)
+    }
+
+    status_pedido(funcionario){
+        if (pedidos == 0){
+            print("Sem pedidos!")
+            return menu_funcionario(funcionario)
+        }
+        abrir_produtos(pedidos)
+        var indice = input("Escreva o numero do pedido modificar: ")
+        indice = parseInt(indice)
+
+        if(isNaN(indice)){
+            espaco()
+            print("Resposta Inválida!")
+            return menu_funcionario(funcionario)
+        }
+        var pedido_atual = pedidos[indice]
+        var resposta1 = input("Qual será o novo status?\n")
+        pedidos.splice(indice, 1)
+        pedido_atual.status = resposta1
+        pedidos.push(pedido_atual)
+        espaco()
+        print("Status atualizado!")
+        print(pedidos)
+        return menu_funcionario(funcionario)
+        
+    }
+    
 }
 
+var pedidos = []
 var usuarios = []
 var produtos = []
+var pedidos = []
 
 produtos.push(new produto("bermuda", "preta", "sem", "RS 250", "20"))
+produtos.push(new produto("camisa", "azul", "sem", "RS 250", "20"))
 var funcionario_adm = new funcionario("mary", "445", "mary@", "1234")
-var cliente_adm = new cliente('lucas', '12/07/2003', "1669", 'lucas@mail', '123')
+var cliente_adm = new cliente('lucas', '12/07/2003', "1669", 'lucas', '123')
 var cliente_adm1 = new cliente('pedro', '12/07/2003', "1669", 'pedro@mail', '123')
+
 
 usuarios.push(cliente_adm)
 usuarios.push(cliente_adm1)
@@ -192,7 +373,7 @@ function login(){
                 return menu_funcionario(usuarios[i])
             }
             if (classe == 1){
-                return print("quase")
+                return menu_cliente(usuarios[i])
             }
         }       
     }
@@ -236,7 +417,9 @@ function menu_funcionario(funcionario){
     print("Ver lista de Clientes(2)")
     print("Ver Lista de Pedidos(3)")
     print("Ver Lista de Produtos(4)")
-    print("Deslogar(5)")
+    print("Mudar status Pedidos(5)")
+    print("Deslogar(6)")
+    espaco()
     
     let resposta = parseInt(input("User: "))
 
@@ -266,10 +449,18 @@ function menu_funcionario(funcionario){
             print(clientes)
             return menu_funcionario(funcionario_atual)
         
+        case 3:
+            print(pedidos)
+            return menu_funcionario(funcionario_atual)
+
         case 4:
             return menu_produtos()
         
         case 5:
+            var instancia = new sistema
+            instancia.status_pedido(funcionario)
+        
+        case 6:
             return menu_incial()
     }
 }
@@ -293,7 +484,7 @@ function editar_funcionario(funcionario){
 
         case 1:
             var resposta1 = input("Qual será o novo nome de usuário?\n")
-            usuarios.splice(indice)
+            usuarios.splice(indice, 1)
             funcionario_atual.user = resposta1
             usuarios.push(funcionario_atual)
             espaco()
@@ -303,7 +494,7 @@ function editar_funcionario(funcionario){
         
         case 2:
             var resposta1 = input("Qual será o novo CPF?\n")
-            usuarios.splice(indice)
+            usuarios.splice(indice, 1)
             funcionario_atual.cpf = resposta1
             usuarios.push(funcionario_atual)
             espaco()
@@ -313,7 +504,7 @@ function editar_funcionario(funcionario){
         
         case 3:
             var resposta1 = input("Qual será o novo Email?\n")
-            usuarios.splice(indice)
+            usuarios.splice(indice, 1)
             funcionario_atual.email = resposta1
             usuarios.push(funcionario_atual)
             espaco()
@@ -323,7 +514,7 @@ function editar_funcionario(funcionario){
 
         case 4:
             var resposta1 = input("Qual será a nova Senha?\n")
-            usuarios.splice(indice)
+            usuarios.splice(indice, 1)
             funcionario_atual.senha = resposta1
             usuarios.push(funcionario_atual)
             espaco()
@@ -345,12 +536,16 @@ function abrir_produtos(lista){
 
     var contador = 1
     espaco()
-    
+
+    if (lista == 0){
+        print("Sem Produtos!")
+    } 
     for(i of lista){
         lista_nova = JSON.stringify(i, null, 2)
         lista_nova = lista_nova.slice(1, -1)
-        console.log("Cliente ", contador)
+        console.log("Alternativa ", contador)
         print(lista_nova);
+        contador++
     }
 }
 
@@ -365,6 +560,18 @@ function menu_produtos(){
             return menu_funcionario()
         
         case 2:
+            var resposta = input("Escreva o numero do produto que deseja editar: ")
+            resposta = parseInt(resposta)
+
+            if(isNaN(resposta)){
+                espaco()
+                print("Resposta Inválida!")
+                return menu_produtos()
+            }
+            resposta = resposta - 1
+
+            var instancia = new sistema
+            return instancia.editar_produto(resposta)
 
         case 3:
             var instancia = new sistema
@@ -372,23 +579,206 @@ function menu_produtos(){
             return menu_produtos()
 
         case 4:
-            var resposta = input("Escreva o numero do produto que deseja excluir: ")
+            var instancia = new sistema
+            instancia.excluir_produto()
+            return excluir_produto()
+        }
+}
 
-            try{
-                resposta = parseInt(resposta)
-                resposta = resposta - 1
-                produtos.splice(resposta - 1)
-                print("Produto excluido!")
-                espaco()
-                return menu_produtos()
+function menu_cliente(cliente){
+    
+    espaco()
+    var cliente_atual = cliente
+    print("Ver meus dados(1)")
+    print("Fazer pedido(2)")
+    print("Meus Pedidos(3)")
+    print("Ver Lista de Produtos(4)")
+    print("Minhas avaliaçoes(5)")
+    print("Deslogar(6)")
+    espaco()
+    
+    let resposta = parseInt(input("User: "))
 
-            }catch{
-                print("Resposta inválida")
-                return menu_produtos()
+    switch(resposta){
+
+        case 1:
+
+            while (true){
+                print(cliente_atual)
+                print('Voltar(1)      Editar(2)')
+                var escolha1 = parseInt(input("User: "))
+                
+                if(escolha1 == 1){
+                    return menu_cliente(cliente_atual)
+                }
+                if(escolha1 == 2){
+                    return editar_cliente(cliente_atual)
+                }else{
+                    print("Resposta inválida")
+                }
             }
-            
+        
+        case 2:
+            cliente_atual
+            var instancia = new sistema
+            instancia.fazer_pedido(cliente_atual.id)
+            print("Pedido realizado!")
+            return menu_cliente(cliente_atual)
+        
+        case 3:
+            var meus_pedidos = []
+            for(i = 0; i < pedidos.length; i++){
 
+                if(pedidos[i].id_cliente == cliente.id){
+                    meus_pedidos.push(pedidos[i])
+                }
+            }
+            if (meus_pedidos == 0){
+                print("Sem pedidos! ")
+                return menu_cliente(cliente_atual)
+            }
+            return menu_pedidos(meus_pedidos)
+
+        case 4:
+            print(produtos)
+            return menu_cliente()
+        
+        case 5:
+            var meus_pedidos = []
+            for(i = 0; i < pedidos.length; i++){
+
+                if(pedidos[i].id_cliente == cliente.id){
+                    meus_pedidos.push(pedidos[i])
+                }
+            }
+            if (meus_pedidos == 0){
+                print("Sem avaliacoes")
+                return menu_cliente(cliente_atual)
+            }
+            for(a of meus_pedidos){
+                print(a.avaliacao)
+            }
+            return menu_cliente(cliente_atual)
+
+        case 6:
+            return menu_incial()
     }
 }
+
+function editar_cliente(cliente){
+
+    var cliente_atual = cliente
+    var indice = usuarios.indexOf(cliente_atual)
+
+    espaco()
+    print("Qual dado gostaria de editar?")
+    print("Nome(1)")
+    print("CPF(2)")
+    print("Email(3)")
+    print("Senha(4)")
+    print("Nascimento(5)")
+    print("Voltar(6)")
+    
+    var resposta = parseInt(input("User: "))
+
+    switch(resposta){
+
+        case 1:
+            var resposta1 = input("Qual será o novo nome?\n")
+            usuarios.splice(indice, 1)
+            cliente_atual.nome = resposta1
+            usuarios.push(cliente_atual)
+            espaco()
+            print(cliente_atual)
+            
+            return editar_cliente(cliente_atual)
+        
+        case 2:
+            var resposta1 = input("Qual será o novo CPF?\n")
+            usuarios.splice(indice, 1)
+            cliente_atual.cpf = resposta1
+            usuarios.push(cliente_atual)
+            espaco()
+            print(cliente_atual)
+            
+            return editar_cliente(cliente_atual)
+        
+        case 3:
+            var resposta1 = input("Qual será o novo Email?\n")
+            usuarios.splice(indice, 1)
+            cliente_atual.email = resposta1
+            usuarios.push(cliente_atual)
+            espaco()
+            print(cliente_atual)
+            
+            return editar_cliente(cliente_atual)
+
+        case 4:
+            var resposta1 = input("Qual será a nova Senha?\n")
+            usuarios.splice(indice, 1)
+            cliente_atual.senha = resposta1
+            usuarios.push(cliente_atual)
+            espaco()
+            print(cliente_atual)
+            
+            return editar_cliente(cliente_atual)
+
+        case 5:
+            var resposta1 = input("Qual será o novo Nascimento?\n")
+            usuarios.splice(indice, 1)
+            cliente_atual.nascimento = resposta1
+            usuarios.push(cliente_atual)
+            espaco()
+            print(cliente_atual)
+
+        case 6:
+            return menu_cliente(cliente_atual)
+
+        default:
+            print("Resposta inválida!")
+            espaco()
+            return editar_cliente(cliente_atual)
+    }
+}
+
+function menu_pedidos(lista_pedidos){
+
+    abrir_produtos(lista_pedidos)
+
+    escolha1 = input("Voltar(1)     Avaliar(2)    Excluir Pedido(3)\n")
+    escolha1 = parseInt(escolha1)
+    switch(escolha1){
+        case 1:
+            return menu_pedidos(lista_pedidos)
+        
+        case 2:
+            var resposta = input("Escreva o numero do pedido que deseja avaliar: ")
+            resposta = parseInt(resposta)
+
+            if(isNaN(resposta)){
+                espaco()
+                print("Resposta Inválida!")
+                return menu_pedidos(lista_pedidos)
+            }
+            resposta = resposta - 1
+
+            pedido_atual = lista_pedidos[resposta]
+            avaliacao_atual = input("Avaliacao: ")
+            pedido_atual.avaliacao = avaliacao_atual
+            print("Avaliacao adicionada")
+            return menu_pedidos(lista_pedidos)
+
+        case 3:
+            var instancia = new sistema
+            instancia.excluir_pedido(lista_pedidos)
+            return menu_pedidos(lista_pedidos)
+
+        default:
+            espaco()
+            print("Resposta Inválida!")
+            return menu_pedidos(lista_pedidos)
+        }
+}
+
 
 menu_incial()

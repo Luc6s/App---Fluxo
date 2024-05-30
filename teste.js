@@ -53,6 +53,10 @@ function input(pergunta){
 
 }
 
+function print(Pergunta){
+    return console.log(Pergunta)
+}
+
 var produtos = []
 
 
@@ -61,13 +65,15 @@ var teste = new sistema
 teste.add_produto()
 
 var usuarios = []
+var usuarios2 = []
 
 var cliente_adm = new cliente('Lucas', '12/07/2003', "1669", 'lucas@mail', '123' )
 var cliente_adm1 = new cliente('pedro', '12/07/2003', "1669", 'lucas@mail', '123' )
+
 var funcionario_adm = new funcionario("mary", "445", "mary@", "1234")
 usuarios.push(cliente_adm)
 usuarios.push(cliente_adm1)
 
+usuarios2.push(cliente_adm1)
 
-
-
+usuario = usuarios[0]
