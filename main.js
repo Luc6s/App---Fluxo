@@ -172,7 +172,7 @@ class sistema{
 
     }
 
-    excluir_pedido(lista_pedidos){
+    excluir_pedido(lista_pedidos){   //corrigir
 
         abrir_produtos(lista_pedidos)
         var resposta = input("Escreva o numero do pedido que deseja excluir: ")
@@ -454,7 +454,7 @@ function menu_funcionario(funcionario){
             return menu_funcionario(funcionario_atual)
 
         case 4:
-            return menu_produtos()
+            return menu_produtos(funcionario)
         
         case 5:
             var instancia = new sistema
@@ -549,7 +549,7 @@ function abrir_produtos(lista){
     }
 }
 
-function menu_produtos(){
+function menu_produtos(funcionario){
 
     abrir_produtos(produtos)
 
@@ -557,7 +557,7 @@ function menu_produtos(){
     escolha1 = parseInt(escolha1)
     switch(escolha1){
         case 1:
-            return menu_funcionario()
+            return menu_funcionario(funcionario)
         
         case 2:
             var resposta = input("Escreva o numero do produto que deseja editar: ")
@@ -566,7 +566,7 @@ function menu_produtos(){
             if(isNaN(resposta)){
                 espaco()
                 print("Resposta Inválida!")
-                return menu_produtos()
+                return menu_produtos(funcionario)
             }
             resposta = resposta - 1
 
@@ -576,12 +576,12 @@ function menu_produtos(){
         case 3:
             var instancia = new sistema
             instancia.add_produto()
-            return menu_produtos()
+            return menu_produtos(funcionario)
 
         case 4:
             var instancia = new sistema
             instancia.excluir_produto()
-            return excluir_produto()
+            return menu_produtos(funcionario)
         }
 }
 
@@ -626,22 +626,12 @@ function menu_cliente(cliente){
             return menu_cliente(cliente_atual)
         
         case 3:
-            var meus_pedidos = []
-            for(i = 0; i < pedidos.length; i++){
-
-                if(pedidos[i].id_cliente == cliente.id){
-                    meus_pedidos.push(pedidos[i])
-                }
-            }
-            if (meus_pedidos == 0){
-                print("Sem pedidos! ")
-                return menu_cliente(cliente_atual)
-            }
-            return menu_pedidos(meus_pedidos)
+            
+            return menu_pedidos(cliente_atual)
 
         case 4:
             print(produtos)
-            return menu_cliente()
+            return menu_cliente(cliente_atual)
         
         case 5:
             var meus_pedidos = []
@@ -741,15 +731,27 @@ function editar_cliente(cliente){
     }
 }
 
-function menu_pedidos(lista_pedidos){
+function menu_pedidos(cliente){
 
+    var meus_pedidos = []
+        for(i = 0; i < pedidos.length; i++){
+
+            if(pedidos[i].id_cliente == cliente.id){
+                meus_pedidos.push(pedidos[i])
+            }
+        }
+        if (meus_pedidos == 0){
+            print("Sem pedidos! ")
+            return menu_cliente(cliente)
+        }
+    lista_pedidos = meus_pedidos
     abrir_produtos(lista_pedidos)
 
     escolha1 = input("Voltar(1)     Avaliar(2)    Excluir Pedido(3)\n")
     escolha1 = parseInt(escolha1)
     switch(escolha1){
         case 1:
-            return menu_pedidos(lista_pedidos)
+            return menu_pedidos(cliente)
         
         case 2:
             var resposta = input("Escreva o numero do pedido que deseja avaliar: ")
@@ -758,7 +760,7 @@ function menu_pedidos(lista_pedidos){
             if(isNaN(resposta)){
                 espaco()
                 print("Resposta Inválida!")
-                return menu_pedidos(lista_pedidos)
+                return menu_pedidos(cliente)
             }
             resposta = resposta - 1
 
@@ -766,17 +768,17 @@ function menu_pedidos(lista_pedidos){
             avaliacao_atual = input("Avaliacao: ")
             pedido_atual.avaliacao = avaliacao_atual
             print("Avaliacao adicionada")
-            return menu_pedidos(lista_pedidos)
+            return menu_pedidos(cliente)
 
         case 3:
             var instancia = new sistema
             instancia.excluir_pedido(lista_pedidos)
-            return menu_pedidos(lista_pedidos)
+            return menu_pedidos(cliente)
 
         default:
             espaco()
             print("Resposta Inválida!")
-            return menu_pedidos(lista_pedidos)
+            return menu_pedidos(cliente)
         }
 }
 
