@@ -56,7 +56,7 @@ class sistema{
     }
     editar_produto(indice){
 
-        abrir_produtos(produtos)
+        abrir_produtos(produtos[indice3])
         var produto_atual = produtos[indice]
     
         espaco()
@@ -230,13 +230,14 @@ class sistema{
         }
         abrir_produtos(pedidos)
         var indice = input("Escreva o numero do pedido modificar: ")
-        indice = parseInt(indice)
+        indice = parseInt(indice - 1)
 
         if(isNaN(indice)){
             espaco()
             print("Resposta Inválida!")
             return menu_funcionario(funcionario)
         }
+
         var pedido_atual = pedidos[indice]
         var resposta1 = input("Qual será o novo status?\n")
         pedidos.splice(indice, 1)
@@ -295,7 +296,7 @@ function menu_incial(){                            // Interface inicial de escol
 
         case 2:
             while(1){
-                var escolha_cadastro = input('Funcionário(1)    Cliente(2)')
+                var escolha_cadastro = input('Funcionário(1)    Cliente(2)\n')
 
                 if (escolha_cadastro == 1){
                     return cadastro_funcionario()
@@ -359,7 +360,10 @@ function cadastro_funcionario(){                                // Interface de 
     
     var funcionario1 = new funcionario(nome, cpf, email, senha)
     usuarios.push(funcionario1)
-    return menu_funcionario(funcionario1)
+    espaco()
+    print('Cadastro feito com sucesso!')
+
+    return menu_incial()
 
 }
 
@@ -466,17 +470,28 @@ function menu_funcionario(funcionario){
             var clientes = usuarios.filter(function(elemento) {
                 return elemento instanceof cliente;
             })
+
             print(clientes)
             return menu_funcionario(funcionario_atual)
         
         case 3:
+            espaco()
+            if (pedidos == 0){
+                print("Nao ha pedidos no momento!:")
+                return menu_funcionario(funcionario_atual)
+            }
             print(pedidos)
+
             return menu_funcionario(funcionario_atual)
 
         case 4:
             return menu_produtos(funcionario)
         
         case 5:
+            if (pedidos == 0){
+                print('Nao ha pediddos no momento!')
+                return menu_funcionario(funcionario)
+            }
             var instancia = new sistema
             instancia.status_pedido(funcionario)
         
@@ -810,5 +825,9 @@ function menu_pedidos(cliente){
         }
 }
 
+var controle = 0
 
-menu_incial()
+if(controle == 0){
+    menu_incial()
+    controle = 1
+}
