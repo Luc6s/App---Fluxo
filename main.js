@@ -310,7 +310,9 @@ function menu_incial(){                         // Interface inicial de escolhas
                 }
             }   
         case 3:
-            return console.log("Finalizando programa!")
+            console.log("Finalizando programa!")
+            process.exit(1)
+            break
 
         default:
             print('Sistema: Resposta incorreta.')
