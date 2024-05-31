@@ -39,7 +39,7 @@ class produto{
     }
 }
 
-class sistema{
+class sistema{        // Todas as interações de modificacoes entre classe 
     constructor(){}
     add_produto(){
         
@@ -54,6 +54,7 @@ class sistema{
         produtos.push(Produto)
 
     }
+
     editar_produto(indice){
 
         abrir_produtos(produtos[indice3])
@@ -172,7 +173,7 @@ class sistema{
 
     }
 
-    excluir_pedido(cliente){   //corrigir
+    excluir_pedido(cliente){   
 
         var meus_pedidos = []
         for(i = 0; i < pedidos.length; i++){
@@ -222,7 +223,7 @@ class sistema{
         pedidos.push(Pedido)
     }
 
-    status_pedido(funcionario){
+    status_pedido(funcionario){                 // Muda o status do pedido
         if (pedidos == 0){
             espaco()
             print("Sem pedidos!")
@@ -252,16 +253,16 @@ class sistema{
     
 }
 
-var pedidos = []
+var pedidos = []                    // Arrays onde todos os dados sao adicionados
 var usuarios = []
 var produtos = []
 var pedidos = []
 
-produtos.push(new produto("bermuda", "preta", "sem", "RS 250", "20"))
+produtos.push(new produto("bermuda", "preta", "sem", "RS 250", "20"))           // Objetos criados para dar volume de dados em testes
 produtos.push(new produto("camisa", "azul", "sem", "RS 250", "20"))
 var funcionario_adm = new funcionario("mary", "445", "mary@", "1234")
-var cliente_adm = new cliente('lucas', '12/07/2003', "1669", 'lucas', '123')
-var cliente_adm1 = new cliente('pedro', '12/07/2003', "1669", 'pedro', '123')
+var cliente_adm = new cliente('paulo', '24/08/2000', "123456", 'paulo@', '123')
+var cliente_adm1 = new cliente('pedro', '17/01/1997', "1669", 'pedro', '123')
 
 
 usuarios.push(cliente_adm)
@@ -269,17 +270,17 @@ usuarios.push(cliente_adm1)
 usuarios.push(funcionario_adm)
 
 
-function input(pergunta){
+function input(pergunta){                       // Resquest de console de forma simplificada
     const frase = require("readline-sync")
     return frase.question(pergunta)
 
 }
 
-function espaco(){                                 // Pula uma linha no console 
+function espaco(){                              // Pula uma linha no console 
     console.log('')
 }
 
-function menu_incial(){                            // Interface inicial de escolhas
+function menu_incial(){                         // Interface inicial de escolhas
 
     console.log("Escolha uma opção:")
     espaco()
@@ -320,7 +321,7 @@ function menu_incial(){                            // Interface inicial de escol
   
 }
 
-function id(){                                      // Cria um id unico para cada objeto
+function id(){                                  // Cria um id unico para cada objeto
 
     const { v4: uuidv4 } = require('uuid');
     const id = uuidv4();
@@ -328,7 +329,7 @@ function id(){                                      // Cria um id unico para cad
 
 }
 
-function cadastro_cliente(){                                // Interface de cadastro
+function cadastro_cliente(){                    // Interface de cadastro
 
     console.log('Preencha as informações abaixo:')
     espaco()
@@ -348,7 +349,7 @@ function cadastro_cliente(){                                // Interface de cada
 
 }
 
-function cadastro_funcionario(){                                // Interface de cadastro
+function cadastro_funcionario(){                // Interface de cadastro
 
     console.log('Preencha as informações abaixo:')
     espaco()
@@ -429,11 +430,11 @@ function descobrir_classe(usuario){             // identifica de qual classe é 
     }
 }
 
-function print(Pergunta){
+function print(Pergunta){                       // Usa a funcao console.log de forma simplificada
     return console.log(Pergunta)
 }
 
-function menu_funcionario(funcionario){
+function menu_funcionario(funcionario){         // Interface do menu de funcionario
 
     espaco()
     var funcionario_atual = funcionario
@@ -500,7 +501,7 @@ function menu_funcionario(funcionario){
     }
 }
 
-function editar_funcionario(funcionario){
+function editar_funcionario(funcionario){       // Interface de edicao de perfil do funcionario
 
     var funcionario_atual = funcionario
     var indice = usuarios.indexOf(funcionario_atual)
@@ -519,7 +520,7 @@ function editar_funcionario(funcionario){
 
         case 1:
             var resposta1 = input("Qual será o novo nome de usuário?\n")
-            usuarios.splice(indice, 1)
+            usuarios.splice(indice, 1)              // Exclui o objeto anterior e add o novo modificado
             funcionario_atual.user = resposta1
             usuarios.push(funcionario_atual)
             espaco()
@@ -567,7 +568,7 @@ function editar_funcionario(funcionario){
     }
 }
 
-function abrir_produtos(lista){
+function abrir_produtos(lista){                 // Abre a lista no console de forma organizada e simplificada
 
     var contador = 1
     espaco()
@@ -576,15 +577,15 @@ function abrir_produtos(lista){
         print("Sem Produtos!")
     } 
     for(i of lista){
-        lista_nova = JSON.stringify(i, null, 2)
-        lista_nova = lista_nova.slice(1, -1)
-        console.log("Alternativa ", contador)
+        lista_nova = JSON.stringify(i, null, 2)     
+        lista_nova = lista_nova.slice(1, -1)        // Retira as {}
+        console.log("Alternativa ", contador)       // Ordena a lista
         print(lista_nova);
         contador++
     }
 }
 
-function menu_produtos(funcionario){
+function menu_produtos(funcionario){            // Interface de edicao de produtos
 
     abrir_produtos(produtos)
 
@@ -620,7 +621,7 @@ function menu_produtos(funcionario){
         }
 }
 
-function menu_cliente(cliente){
+function menu_cliente(cliente){                 // Interface de menu de cliente
     
     espaco()
     var cliente_atual = cliente
@@ -691,7 +692,7 @@ function menu_cliente(cliente){
     }
 }
 
-function editar_cliente(cliente){
+function editar_cliente(cliente){               // Interface de edicao de perfil do cliente
 
     var cliente_atual = cliente
     var indice = usuarios.indexOf(cliente_atual)
@@ -772,7 +773,7 @@ function editar_cliente(cliente){
     }
 }
 
-function menu_pedidos(cliente){
+function menu_pedidos(cliente){                 // Interface dos pedidos
 
     var meus_pedidos = []
         for(i = 0; i < pedidos.length; i++){
@@ -825,7 +826,7 @@ function menu_pedidos(cliente){
         }
 }
 
-var controle = 0
+var controle = 0                                // var de controle para o programa inciar apenas uma vez
 
 if(controle == 0){
     menu_incial()
