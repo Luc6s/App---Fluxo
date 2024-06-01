@@ -57,7 +57,7 @@ class sistema{        // Todas as interações de modificacoes entre classe
 
     editar_produto(indice){
 
-        abrir_produtos(produtos[indice3])
+        abrir_produtos(produtos[indice])
         var produto_atual = produtos[indice]
     
         espaco()
